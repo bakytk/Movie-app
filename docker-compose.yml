@@ -1,0 +1,40 @@
+version: "3.2"
+services:
+
+  movie_app:
+    image: express_server
+    container_name: movie_app
+    restart: unless-stopped
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - published: ${APP_PORT:-3000}
+        target: 3000
+    environment:
+      - IS_GITHUB_ACTION=$IS_GITHUB_ACTION
+      - JWT_SECRET=$JWT_SECRET
+      - DB_HOST=mongo_db
+      - DB_NAME=$DB_NAME
+      - DB_PORT=$DB_PORT
+      - DB_USER=$DB_USER
+      - DB_PWD=$DB_PWD
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    image: mongo
+    container_name: mongo_db
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$DB_PWD
+    ports:
+      - "27017:27017"
+    volumes:
+      - movie_mongo:/data/db
+
+volumes:
+  movie_mongo:
