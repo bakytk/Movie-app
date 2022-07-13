@@ -1,21 +1,15 @@
 
 # Movie-api
 
-The code in this branch is an implementation of the task explained in this [README](https://github.com/netguru/nodejs-recruitment-task)
 
 ##### Database
-
-There are basically two major rival db types on the market, apart from narrow-use cases like `Redis` to store session data in real-time or `elastic_search` with massive text query capaibilities:
-
-1. `SQL-type` db's like: Postgres, OracleSql and MySQL, etc. These are usually the primary go-to tables, especially in case there are multiple abstract models (tables) that involve frequent and intra-table queries. Yet, they are hard to scale, shard and tend to be slow
-1. `Document-oriented` db's like: MongoDb, AWS DynamoDb, etc. These are more flexible, being basically `schemaless`, in terms of columns definition, and great to store varying-field data. Yet, their handicap is that not strictly ACID-complient, violating some of normality assumptions.
 
 Since we need to store on only `movies` data with four columns: `Title, Released, Genre, Director` - without any calls or nesting with other models, a document-oriented Mongo seems as a natural choice. `mongoose` is popular ORM over Mongo, allowing to bind `quasi-schema` on db and making other goodies like `type-checking` for the fields (columns)
 
 
 ##### Endpoints
 
-In line with the instructions, the server (on `Express`) supports 3 endpoints:
+The server (on `Express`) supports 3 endpoints:
 
 1. `/auth (POST)`: to get JWT token for protected route `/movies` passing either `basic-thomas` or `premium-jim` with their associated passwords
 
@@ -56,7 +50,7 @@ Not much time was invested into test coverage, yet using `mocha-chai`, the `test
 1. `/movies (POST & GET)` calls, expecting server response status to be `200`
 
 
-##### Deployment
+##### Start & Deployment
 
 
 The code can either be run locally with `docker-compose` installed, or can be run with `github_workflows` with trigger events defined to be either:
@@ -90,13 +84,3 @@ curl --location --request POST 'http://localhost:17000/movies' \
     "title": "Avatar"
 }'
 ```
-
-
-##### Pull request (PR)
-
-Permission to add branch & create PR into the original repo was denied, so creating PR within my own repo into `start` branch, which fully coincides with the starting point (code) of the original repo
-
-
-
-
-
