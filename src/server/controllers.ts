@@ -1,8 +1,8 @@
 
-const { JWT_SECRET } = process.env;
-const { authSign, AuthError } = require("./auth");
-const { GetMovie } = require("../omdb/rest_api");
-const db = require("../db/index");
+const JWT_SECRET = process.env.JWT_SECRET;
+import { authSign, AuthError } from "./auth";
+import { GetMovie } from "../omdb/rest_api";
+import { db } from "../db/index";
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET env");
@@ -38,7 +38,7 @@ function getFirstDay (year, month) {
   return new Date(year, month, 1);
 };
 
-module.exports = {
+const obj = {
 
   ping: (req, res) => {
     return res.status(200).json({message: "Pong!"});
@@ -120,10 +120,9 @@ module.exports = {
         => fetch movie data & save
       */
       let response = await GetMovie (MovieTitle);
-      if ( response.error){
-        //maybe not found!
-        throw new Error (response.error)
-      };
+      // if ( response.error){
+      //   throw new Error (response.error)
+      // };
       let { Title, Released, Genre, Director
         } = response.data;
       let movie = new Movie ({
@@ -147,4 +146,6 @@ module.exports = {
   fallback: (req, res) => {
     return res.status(401).json({message: "Invalid endpoint or method"})
   }
-}
+};
+
+export const { ping, fallback, create, authenticate, fetch } = obj;

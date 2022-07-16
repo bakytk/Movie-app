@@ -1,16 +1,17 @@
 
-const { JWT_SECRET } = process.env;
-const {
+const JWT_SECRET  = process.env.JWT_SECRET;
+import {
   authenticate,
   fetch,
   create,
   ping,
   fallback
-} = require('./controllers');
-const { authVerify } = require("./auth");
-const express = require('express');
+} from './controllers';
+import { authVerify } from "./auth";
+import express from 'express';
+import bodyParser from 'body-parser';
+
 const router = express.Router();
-const bodyParser= require('body-parser')
 
 //check cors?
 router.use(bodyParser.json());
@@ -30,4 +31,4 @@ router.use((error, _, res, __) => {
   return res.status(500).json({ error: "Processing error" });
 });
 
-module.exports = router;
+export {router};

@@ -10,8 +10,9 @@
     "removeComments": false,
     "outDir": "dist"
   },
-  "include": [
-    "src/server/index.ts",
-  ],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

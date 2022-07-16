@@ -10,9 +10,10 @@ if [ "$IS_GITHUB_ACTION" = "true" ]; then
   npm test;
 else
   # env=local_env => check server in-depth
-  # if [ ! -f .env ]
-  # then
-  #   export $(cat .env | xargs)
-  # fi
   npm start
 fi
+
+# if [ ! -f .env ]
+# then
+#   export $(cat .env | xargs)
+# fi

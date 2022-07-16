@@ -1,10 +1,10 @@
 
-const { OMDB_API_KEY } = process.env;
+const OMDB_API_KEY = process.env.OMDB_API_KEY;
 const OMDB_BASE_URL = `http://www.omdbapi.com`
 
-const axios = require("axios");
+import axios from "axios";
 
-exports.GetMovie = async (movie_name) => {
+const GetMovie = async (movie_name) => {
   try {
     if ( !(OMDB_API_KEY && movie_name)){
       throw new Error ("Api key or movie_name undefined");
@@ -25,3 +25,5 @@ exports.GetMovie = async (movie_name) => {
     throw error;
   }
 };
+
+export { GetMovie };

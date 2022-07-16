@@ -1,5 +1,5 @@
 
-module.exports = mongoose => {
+const models = (mongoose) => {
   var schema = mongoose.Schema({
     Title: {
       type: String,
@@ -38,3 +38,5 @@ module.exports = mongoose => {
   });
   return mongoose.model("Movie", schema);
 };
+
+export { models };

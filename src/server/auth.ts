@@ -1,4 +1,5 @@
-const jwt = require("jsonwebtoken");
+
+import jwt from "jsonwebtoken";
 
 const users = [
   {
@@ -70,7 +71,7 @@ const authVerify = (secret) => (req, res, next) => {
 	  }//if-else
 };
 
-module.exports = {
+export {
   authSign,
   authVerify,
   AuthError,

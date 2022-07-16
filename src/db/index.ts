@@ -1,12 +1,13 @@
 
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 mongoose.Promise = global.Promise;
 
-const config = require("./config");
-const mongo_db = {};
+import { config } from "./config";
+import { models } from "./models";
 
+const mongo_db: any = {};
 mongo_db.mongoose = mongoose;
 mongo_db.url = config.url;
-mongo_db.movies = require("./models")(mongoose);
+mongo_db.movies = models(mongoose);
 
-module.exports = mongo_db;
+export { mongo_db as db };
