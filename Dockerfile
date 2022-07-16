@@ -14,16 +14,13 @@ RUN npm run build
 # run step
 FROM node:14-alpine
 ENV NODE_ENV=production
-# more info: https://github.com/krallin/tini
-# RUN apk add --no-cache tini
 WORKDIR /app
-# RUN chown node:node .
-# USER node
 COPY package*.json ./
 RUN npm install
+COPY start.sh ./
+COPY .env ./
 COPY --from=builder /app/dist/ dist/
 EXPOSE 8080
 
 RUN chmod +x start.sh
 ENTRYPOINT [ "/app/start.sh" ]
-#ENTRYPOINT [ "/sbin/tini","--", "node", "dist/server.js" ]
