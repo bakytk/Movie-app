@@ -4,12 +4,13 @@
 
 ##### Database
 
-Since we need to store on only `movies` data with four columns: `Title, Released, Genre, Director` - without any calls or nesting with other models, a document-oriented Mongo seems as a natural choice. `mongoose` is popular ORM over Mongo, allowing to bind `quasi-schema` on db and making other goodies like `type-checking` for the fields (columns)
+API calls log `movies` data with four columns: `Title, Released, Genre, Director` to MongoDB. 
+`mongoose` is used as ORM
 
 
 ##### Endpoints
 
-The server (on `Express`) supports 3 endpoints:
+The `Express` server supports 3 endpoints:
 
 1. `/auth (POST)`: to get JWT token for protected route `/movies` passing either `basic-thomas` or `premium-jim` with their associated passwords
 
@@ -17,15 +18,16 @@ The server (on `Express`) supports 3 endpoints:
 
 1. `/movies (POST)`: `title` is parsed from req.body, and if film not is not already saved, the controllers fetch data from `OMDB` api by title and saves into the global collection stored in `MongoDB`
 
-The constraint that `basic` plan user cannot save more than 5 films per calendar month was observed
+A constraint is imposed on `basic` plan user to save more than 5 films per calendar month
 
 
 ##### Parameters
 
 
-Most parameters are self-explanatory and included in `.env` file, it should normally be hidden by default, but for task/code replicability, it's published in repo
+`IS_GITHUB_ACTION` parameter is a boolean that is `true` if the code is run by `github_workflows`
 
-The only specific parameter is `IS_GITHUB_ACTION`: this is a boolean that is `true` if the code is run by `github_workflows`. Access to that runtime environment is limited so only `npm test` is run, while `npm start` runs when environment is eg localhost, where one can server functions more thoroughly
+It was introduced so as to test app when there's eg `push` event into `dev` branch.
+Otherwise, `npm test` command is used as main rather than `npm start`, otherwise app will run indefinitely, consuming runtime limits
 
 The list of parameters with default values is as follows:
 
@@ -43,7 +45,7 @@ DB_PORT=27017
 ##### Mocha tests
 
 
-Not much time was invested into test coverage, yet using `mocha-chai`, the `test/index` code checks if the following can be run:
+`mocha-chai`, the `test/index` are used to make basic checks on the work of the app:
 
 1. authentication for the `basic` user, getting JWT_TOKEN (adding authentication for `premium` user could be a straightforward extension)
 
@@ -53,12 +55,19 @@ Not much time was invested into test coverage, yet using `mocha-chai`, the `test
 ##### Start & Deployment
 
 
-The code can either be run locally with `docker-compose` installed, or can be run with `github_workflows` with trigger events defined to be either:
+```
+# to run and test locally 
+docker-compose up --build
+``` 
 
-1. `push` for `test_ci_cd` branch, or
+`github_workflows` trigger events are set for:
+
+1. `push` for `dev` branch, or
 1. `pull_request` into `master or main` branches
 
 Note that `--exit-code-from` flag, when instantiating code in `github_workflows` helps exit from `express` app, terminating work of both server and mongo_db containers - this is useful for `npm test`
+
+To test locally, run the following:
 
 ```
 # start locally (default port: 17000)
