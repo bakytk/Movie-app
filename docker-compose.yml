@@ -10,8 +10,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - published: ${APP_PORT:-3000}
-        target: 3000
+      - published: ${APP_PORT:-17000}
+        target: 17000
     environment:
       - IS_GITHUB_ACTION=$IS_GITHUB_ACTION
       - JWT_SECRET=$JWT_SECRET

@@ -2,7 +2,7 @@
 name: movie-api
 on:
   push:
-    branches: test_ci_cd
+    branches: dev
   pull_request:
     branches: [ main, master ]
 
@@ -15,4 +15,4 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '14.x'
-      - run: IS_GITHUB_ACTION=true docker-compose up --exit-code-from movie_app 
+      - run: IS_GITHUB_ACTION=true docker-compose up --exit-code-from movie_app

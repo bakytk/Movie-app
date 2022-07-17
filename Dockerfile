@@ -20,7 +20,7 @@ RUN npm install
 COPY start.sh ./
 COPY .env ./
 COPY --from=builder /app/dist/ dist/
-EXPOSE 8080
+EXPOSE 17000
 
 RUN chmod +x start.sh
 ENTRYPOINT [ "/app/start.sh" ]
